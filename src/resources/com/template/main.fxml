@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="555.0"
+            prefWidth="871.0"
+            style="-fx-background-color: #F6EDDC;"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.template.MainController">
+
+    <children>
+
+        <VBox spacing="18.0"
+              AnchorPane.topAnchor="20.0"
+              AnchorPane.bottomAnchor="20.0"
+              AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0">
+
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <children>
+
+                <!-- TÍTULO -->
+
+                <Label alignment="CENTER"
+                       maxWidth="Infinity"
+                       prefHeight="50.0"
+                       style="-fx-background-color: #C53557;
+                              -fx-background-radius: 12;
+                              -fx-padding: 10;
+                              -fx-font-weight: bold;"
+                       text="Cadastro de Livros"
+                       textFill="#F6EDDC">
+
+                    <font>
+                        <Font size="22.0"/>
+                    </font>
+
+                </Label>
+
+                <!-- TABELA -->
+
+                <TableView fx:id="tblLivros"
+                           VBox.vgrow="ALWAYS"
+                           style="-fx-background-color: #FFFFFF;
+                                  -fx-border-color: #C53557;
+                                  -fx-border-radius: 10;
+                                  -fx-background-radius: 10;
+                                  -fx-padding: 5;">
+
+                    <columns>
+
+                        <TableColumn fx:id="colId"
+                                     prefWidth="70.0"
+                                     text="ID"/>
+
+                        <TableColumn fx:id="colTitulo"
+                                     prefWidth="250.0"
+                                     text="Título"/>
+
+                        <TableColumn fx:id="colAutor"
+                                     prefWidth="200.0"
+                                     text="Autor"/>
+
+                        <TableColumn fx:id="colGenero"
+                                     prefWidth="140.0"
+                                     text="Gênero"/>
+
+                        <TableColumn fx:id="colPaginas"
+                                     prefWidth="100.0"
+                                     text="Páginas"/>
+
+                    </columns>
+
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+
+                </TableView>
+
+                <!-- CAMPOS -->
+
+                <VBox spacing="12.0"
+                      style="-fx-background-color: #FBA8AF;
+                             -fx-background-radius: 12;
+                             -fx-padding: 15;">
+
+                    <children>
+
+                        <HBox spacing="10.0"
+                              alignment="CENTER_LEFT">
+
+                            <children>
+
+                                <Label text="ID"
+                                       textFill="#3B1C22"
+                                       style="-fx-font-weight: bold;"/>
+
+                                <TextField fx:id="txtId"
+                                           editable="false"
+                                           prefWidth="70.0"
+                                           style="-fx-background-color: #F6EDDC;
+                                                  -fx-background-radius: 8;
+                                                  -fx-border-radius: 8;
+                                                  -fx-border-color: #C53557;"/>
+
+                                <Label text="Nome"
+                                       textFill="#3B1C22"
+                                       style="-fx-font-weight: bold;"/>
+
+                                <TextField fx:id="txtNome"
+                                           HBox.hgrow="ALWAYS"
+                                           style="-fx-background-color: #F6EDDC;
+                                                  -fx-background-radius: 8;
+                                                  -fx-border-radius: 8;
+                                                  -fx-border-color: #C53557;"/>
+
+                            </children>
+
+                        </HBox>
+
+                    </children>
+
+                </VBox>
+
+                <!-- BOTÕES -->
+
+                <HBox spacing="12.0"
+                      alignment="CENTER_RIGHT">
+
+                    <children>
+
+                        <Button fx:id="btnSalvar"
+                                mnemonicParsing="false"
+                                prefWidth="100.0"
+                                style="-fx-background-color: #C53557;
+                                       -fx-text-fill: #F6EDDC;
+                                       -fx-background-radius: 8;
+                                       -fx-font-weight: bold;"
+                                text="Salvar"/>
+
+                        <Button fx:id="btnAlterar"
+                                mnemonicParsing="false"
+                                prefWidth="100.0"
+                                style="-fx-background-color: #FBA8AF;
+                                       -fx-text-fill: #3B1C22;
+                                       -fx-background-radius: 8;
+                                       -fx-font-weight: bold;"
+                                text="Alterar"/>
+
+                        <Button fx:id="btnDeletar"
+                                mnemonicParsing="false"
+                                prefWidth="100.0"
+                                style="-fx-background-color: #C53557;
+                                       -fx-text-fill: #F6EDDC;
+                                       -fx-background-radius: 8;
+                                       -fx-font-weight: bold;"
+                                text="Deletar"/>
+
+                        <Button fx:id="btnLimpar"
+                                mnemonicParsing="false"
+                                prefWidth="100.0"
+                                style="-fx-background-color: #FBA8AF;
+                                       -fx-text-fill: #3B1C22;
+                                       -fx-background-radius: 8;
+                                       -fx-font-weight: bold;"
+                                text="Limpar"/>
+
+                    </children>
+
+                </HBox>
+
+            </children>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
