@@ -2,17 +2,14 @@ package com.template;
 import com.template.Conexao;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-// Executa as operações de banco de dados (Inserir, Listar, Atualizar e Excluir)
 public class LivroDAO {
 
     static final Logger logger = Logger.getLogger(LivroDAO.class.getName());
 
-
-    public void cadastrarLivro(com.template.LivroDTO livro) {
+    public void cadastrarLivro(LivroDTO livro) {
         String sql = "INSERT INTO livros (titulo, autor, genero, paginas) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = Conexao.conectar();
@@ -30,16 +27,16 @@ public class LivroDAO {
         }
     }
 
-    public ArrayList<com.template.LivroDTO> listarLivros() {
+    public ArrayList<LivroDTO> listarLivros() {
         String sql = "SELECT * FROM livros ORDER BY id";
-        ArrayList<com.template.LivroDTO> listaLivros = new ArrayList<>();
+        ArrayList<LivroDTO> listaLivros = new ArrayList<>();
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                com.template.LivroDTO livro = new com.template.LivroDTO();
+                LivroDTO livro = new LivroDTO();
                 livro.setId(rs.getInt("id"));
                 livro.setTitulo(rs.getString("titulo"));
                 livro.setAutor(rs.getString("autor"));
@@ -53,7 +50,7 @@ public class LivroDAO {
         return listaLivros;
     }
 
-    public void atualizarLivro(com.template.LivroDTO livro) {
+    public void atualizarLivro(LivroDTO livro) {
         String sql = "UPDATE livros SET titulo = ?, autor = ?, genero = ?, paginas = ? WHERE id = ?";
 
         try (Connection conn = Conexao.conectar();
@@ -64,6 +61,8 @@ public class LivroDAO {
             pstmt.setString(3, livro.getGenero());
             pstmt.setInt(4, livro.getPaginas());
             pstmt.setInt(5, livro.getId());
+
+            pstmt.executeUpdate(); // <-- LINHA CORRIGIDA (Faltava executar o update no banco!)
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Erro ao atualizar livros", e);
