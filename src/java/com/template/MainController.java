@@ -2,10 +2,7 @@ package com.template;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -27,21 +24,22 @@ public class MainController {
     @FXML private TableColumn<LivroDTO, String> colAutor;
     @FXML private TableColumn<LivroDTO, String> colGenero;
     @FXML private TableColumn<LivroDTO, Integer> colPaginas;
+    @FXML private ComboBox<String> cbGenero;
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
         try {
             String titulo = txtTitulo.getText();
             String autor = txtAutor.getText();
-            String genero = txtGenero.getText();
+            String genero = cbGenero.getValue();
             int paginas = Integer.parseInt(txtPaginas.getText());
+
 
             LivroDTO objLivroDTO = new LivroDTO();
             objLivroDTO.setTitulo(titulo);
             objLivroDTO.setAutor(autor);
             objLivroDTO.setGenero(genero);
             objLivroDTO.setPaginas(paginas);
-            // O ID não é setado aqui porque o banco gera automaticamente (Auto-increment)
 
             LivroDAO objLivroDAO = new LivroDAO();
             objLivroDAO.cadastrarLivro(objLivroDTO);
@@ -102,7 +100,7 @@ public class MainController {
     private void btnLimparAction(ActionEvent event) {
         txtTitulo.clear();
         txtAutor.clear();
-        txtGenero.clear();
+        cbGenero.setValue(null);
         txtPaginas.clear();
         txtId.clear();
         tblLivro.getSelectionModel().clearSelection();
@@ -115,10 +113,10 @@ public class MainController {
         colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
         colPaginas.setCellValueFactory(new PropertyValueFactory<>("paginas"));
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        cbGenero.getItems().addAll("Romance","Ficção Científica", "Fantasia", "Terror", "Suspense", "Drama", "Aventura", "Biografia", "História", "Acadêmico");
 
         carregarLivros(); // Preenche a tabela ao iniciar
 
-        // Listener: Executa o método toda vez que uma linha da tabela for clicada
         tblLivro.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 carregarCampos(newValue);
@@ -132,7 +130,6 @@ public class MainController {
         tblLivro.setItems(FXCollections.observableArrayList(listaLivros));
     }
 
-    // Passamos o objeto diretamente do Listener para simplificar
     private void carregarCampos(LivroDTO livroDTO) {
         if (livroDTO != null) {
             txtId.setText(String.valueOf(livroDTO.getId()));
