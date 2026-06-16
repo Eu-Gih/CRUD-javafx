@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="650.0"
             prefWidth="900.0"
             style="-fx-background-color: #F6EDDC;"
@@ -53,12 +55,12 @@
                 <Label fx:id="lblMensagem"
                        alignment="CENTER"
                        maxWidth="Infinity"
-                       text="Pronto para cadastrar livros!"
+                       text="Pronto para cadastrar livros."
                        style="-fx-background-color: white;
                               -fx-background-radius: 10;
                               -fx-padding: 10;
                               -fx-font-weight: bold;
-                              -fx-text-fill: #3B1C22;" />
+                              -fx-text-fill: #3B1C22;"/>
 
                 <!-- CONTADOR -->
                 <HBox alignment="CENTER_RIGHT">
@@ -228,6 +230,12 @@
                                           -fx-border-radius: 8;
                                           -fx-border-color: #C53557;"/>
 
+                                        <ImageView fitWidth="75" fitHeight="75" preserveRatio="true">
+                                            <image>
+                                                <Image url="@imagens/hello-ktto-livro.png" />
+                                            </image>
+                                        </ImageView>
+
                                     </children>
 
                                 </HBox>
@@ -253,7 +261,7 @@
                                 style="-fx-background-color: #C53557;
                                        -fx-text-fill: white;
                                        -fx-font-weight: bold;
-                                       -fx-background-radius: 10;" />
+                                       -fx-background-radius: 10;"/>
 
                         <Button fx:id="btnAlterar"
                                 text="✏ Alterar"
@@ -263,7 +271,7 @@
                                 style="-fx-background-color: #FBA8AF;
                                        -fx-text-fill: #3B1C22;
                                        -fx-font-weight: bold;
-                                       -fx-background-radius: 10;" />
+                                       -fx-background-radius: 10;"/>
 
                         <Button fx:id="btnDeletar"
                                 text="🗑 Excluir"
@@ -273,7 +281,7 @@
                                 style="-fx-background-color: #C53557;
                                        -fx-text-fill: white;
                                        -fx-font-weight: bold;
-                                       -fx-background-radius: 10;" />
+                                       -fx-background-radius: 10;"/>
 
                         <Button fx:id="btnLimpar"
                                 text="🧹 Limpar"
@@ -283,7 +291,7 @@
                                 style="-fx-background-color: #FBA8AF;
                                        -fx-text-fill: #3B1C22;
                                        -fx-font-weight: bold;
-                                       -fx-background-radius: 10;" />
+                                       -fx-background-radius: 10;"/>
 
                     </children>
 

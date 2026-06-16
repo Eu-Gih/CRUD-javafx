@@ -97,7 +97,7 @@ public class MainController {
             carregarLivros();
             btnLimparAction(null);
         } catch (NumberFormatException e) {
-            System.out.println("Selecione um livro válido para excluir.");
+            System.out.println("Selecione um livro válido para excluir!");
         }
     }
 
