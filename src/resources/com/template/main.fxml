@@ -53,7 +53,7 @@
                 <Label fx:id="lblMensagem"
                        alignment="CENTER"
                        maxWidth="Infinity"
-                       text="Pronto para cadastrar livros."
+                       text="Pronto para cadastrar livros!"
                        style="-fx-background-color: white;
                               -fx-background-radius: 10;
                               -fx-padding: 10;

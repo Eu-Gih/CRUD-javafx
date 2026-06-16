@@ -25,6 +25,8 @@ public class MainController {
     @FXML private TableColumn<LivroDTO, String> colGenero;
     @FXML private TableColumn<LivroDTO, Integer> colPaginas;
     @FXML private ComboBox<String> cbGenero;
+    @FXML private Label lblMensagem;
+    @FXML private Label lblTotal;
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
@@ -42,6 +44,7 @@ public class MainController {
             objLivroDTO.setPaginas(paginas);
 
             LivroDAO objLivroDAO = new LivroDAO();
+            lblMensagem.setText("Livro cadastrado com sucesso!");
             objLivroDAO.cadastrarLivro(objLivroDTO);
 
             carregarLivros(); // Atualiza a tabela
@@ -58,7 +61,7 @@ public class MainController {
 
             String titulo = txtTitulo.getText();
             String autor = txtAutor.getText();
-            String genero = txtGenero.getText();
+            String genero = cbGenero.getValue();
             int paginas = Integer.parseInt(txtPaginas.getText());
             int id = Integer.parseInt(txtId.getText());
 
@@ -70,6 +73,7 @@ public class MainController {
             atualizalivro.setPaginas(paginas);
 
             LivroDAO dao = new LivroDAO();
+            lblMensagem.setText("Livro atualizado com sucesso!");
             dao.atualizarLivro(atualizalivro);
 
             carregarLivros();
@@ -87,6 +91,7 @@ public class MainController {
             int id = Integer.parseInt(txtId.getText());
 
             LivroDAO dao = new LivroDAO();
+            lblMensagem.setText("Livro excluído com sucesso!");
             dao.excluirLivro(id);
 
             carregarLivros();
@@ -128,6 +133,8 @@ public class MainController {
         LivroDAO slaLivroDAO = new LivroDAO();
         ArrayList<LivroDTO> listaLivros = slaLivroDAO.listarLivros();
         tblLivro.setItems(FXCollections.observableArrayList(listaLivros));
+
+        lblTotal.setText(String.valueOf(listaLivros.size()));
     }
 
     private void carregarCampos(LivroDTO livroDTO) {
@@ -136,7 +143,7 @@ public class MainController {
             txtPaginas.setText(String.valueOf(livroDTO.getPaginas()));
             txtTitulo.setText(livroDTO.getTitulo());
             txtAutor.setText(livroDTO.getAutor());
-            txtGenero.setText(livroDTO.getGenero());
+            cbGenero.setValue(livroDTO.getGenero());
         }
     }
 }
