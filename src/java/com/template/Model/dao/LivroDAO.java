@@ -1,5 +1,7 @@
-package com.template;
-import com.template.Conexao;
+package com.template.Model.dao;
+import com.template.Model.Conexao;
+import com.template.Model.dto.LivroDTO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Logger;

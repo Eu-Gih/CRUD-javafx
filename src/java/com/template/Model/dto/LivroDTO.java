@@ -1,4 +1,4 @@
-package com.template;
+package com.template.Model.dto;
 
 // usado apenas para transitar informações pelo sistema
 public class LivroDTO {

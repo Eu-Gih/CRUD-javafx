@@ -1,11 +1,11 @@
-package com.template;
+package com.template.Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import static com.template.LivroDAO.logger;
+import static com.template.Model.dao.LivroDAO.logger;
 
 // Configuração e abertura da conexão com o banco PostgreSQL
 public class Conexao {

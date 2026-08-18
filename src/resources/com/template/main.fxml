@@ -12,7 +12,7 @@
             style="-fx-background-color: #F6EDDC;"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.template.MainController">
+            fx:controller="com.template.Controller.MainController">
 
     <children>
 

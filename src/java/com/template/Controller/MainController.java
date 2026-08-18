@@ -1,5 +1,7 @@
-package com.template;
+package com.template.Controller;
 
+import com.template.Model.dao.LivroDAO;
+import com.template.Model.dto.LivroDTO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
