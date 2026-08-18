@@ -3,9 +3,6 @@ package com.template.Model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-
-import static com.template.Model.dao.LivroDAO.logger;
 
 // Configuração e abertura da conexão com o banco PostgreSQL
 public class Conexao {
@@ -18,8 +15,8 @@ public class Conexao {
         try {
             return DriverManager.getConnection(URL, USUARIO, SENHA);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Erro ao conectar ao banco", e);
+            return DriverManager.getConnection(URL, USUARIO, SENHA);
         }
-        return null;
+
     }
 }

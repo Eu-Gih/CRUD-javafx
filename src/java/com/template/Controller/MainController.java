@@ -1,14 +1,15 @@
 package com.template.Controller;
 
-import com.template.Model.dao.LivroDAO;
 import com.template.Model.dto.LivroDTO;
+import com.template.Service.LivroService;
+import com.template.Validator.LivroValidator;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
     @FXML private Button btnSalvar;
@@ -30,29 +31,34 @@ public class MainController {
     @FXML private Label lblMensagem;
     @FXML private Label lblTotal;
 
+    // Instanciando o Service e o Validator ao invés do DAO
+    private final LivroService livroService = new LivroService();
+    private final LivroValidator livroValidator = new LivroValidator();
+
     @FXML
     private void btnSalvarAction(ActionEvent event) {
         try {
-            String titulo = txtTitulo.getText();
-            String autor = txtAutor.getText();
-            String genero = cbGenero.getValue();
-            int paginas = Integer.parseInt(txtPaginas.getText());
-
-
             LivroDTO objLivroDTO = new LivroDTO();
-            objLivroDTO.setTitulo(titulo);
-            objLivroDTO.setAutor(autor);
-            objLivroDTO.setGenero(genero);
-            objLivroDTO.setPaginas(paginas);
+            objLivroDTO.setTitulo(txtTitulo.getText());
+            objLivroDTO.setAutor(txtAutor.getText());
+            objLivroDTO.setGenero(cbGenero.getValue() != null ? cbGenero.getValue() : "");
 
-            LivroDAO objLivroDAO = new LivroDAO();
-            lblMensagem.setText("Livro cadastrado com sucesso!");
-            objLivroDAO.cadastrarLivro(objLivroDTO);
+            // Tratando campos vazios para não quebrar o parseInt
+            if(!txtPaginas.getText().isEmpty()) {
+                objLivroDTO.setPaginas(Integer.parseInt(txtPaginas.getText()));
+            }
 
-            carregarLivros(); // Atualiza a tabela
-            btnLimparAction(null); // Limpa os campos
+            // Chama a validação antes de salvar
+            if (livroValidator.validarLivro(objLivroDTO)) {
+                livroService.cadastrarLivro(objLivroDTO); // Chama o Service
+                lblMensagem.setText("Livro cadastrado com sucesso!");
+                carregarLivros();
+                btnLimparAction(null);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Por favor, preencha o número de páginas corretamente.");
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar: " + e.getMessage());
         }
     }
 
@@ -61,27 +67,27 @@ public class MainController {
         try {
             if (txtId.getText().isEmpty()) return;
 
-            String titulo = txtTitulo.getText();
-            String autor = txtAutor.getText();
-            String genero = cbGenero.getValue();
-            int paginas = Integer.parseInt(txtPaginas.getText());
-            int id = Integer.parseInt(txtId.getText());
-
             LivroDTO atualizalivro = new LivroDTO();
-            atualizalivro.setId(id);
-            atualizalivro.setTitulo(titulo);
-            atualizalivro.setAutor(autor);
-            atualizalivro.setGenero(genero);
-            atualizalivro.setPaginas(paginas);
+            atualizalivro.setId(Integer.parseInt(txtId.getText()));
+            atualizalivro.setTitulo(txtTitulo.getText());
+            atualizalivro.setAutor(txtAutor.getText());
+            atualizalivro.setGenero(cbGenero.getValue() != null ? cbGenero.getValue() : "");
 
-            LivroDAO dao = new LivroDAO();
-            lblMensagem.setText("Livro atualizado com sucesso!");
-            dao.atualizarLivro(atualizalivro);
+            if(!txtPaginas.getText().isEmpty()) {
+                atualizalivro.setPaginas(Integer.parseInt(txtPaginas.getText()));
+            }
 
-            carregarLivros();
-            btnLimparAction(null);
+            // Valida antes de alterar
+            if (livroValidator.validarLivro(atualizalivro)) {
+                livroService.atualizarLivro(atualizalivro); // Chama o Service
+                lblMensagem.setText("Livro atualizado com sucesso!");
+                carregarLivros();
+                btnLimparAction(null);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Erro ao atualizar: verifique os campos numéricos.");
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar o banco de dados: " + e.getMessage());
         }
     }
 
@@ -92,14 +98,15 @@ public class MainController {
 
             int id = Integer.parseInt(txtId.getText());
 
-            LivroDAO dao = new LivroDAO();
+            livroService.excluirLivro(id); // Chama o Service
             lblMensagem.setText("Livro excluído com sucesso!");
-            dao.excluirLivro(id);
 
             carregarLivros();
             btnLimparAction(null);
         } catch (NumberFormatException e) {
             System.out.println("Selecione um livro válido para excluir!");
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir: " + e.getMessage());
         }
     }
 
@@ -122,7 +129,7 @@ public class MainController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         cbGenero.getItems().addAll("Romance","Ficção Científica", "Fantasia", "Terror", "Suspense", "Drama", "Aventura", "Biografia", "História", "Acadêmico");
 
-        carregarLivros(); // Preenche a tabela ao iniciar
+        carregarLivros();
 
         tblLivro.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -132,11 +139,14 @@ public class MainController {
     }
 
     private void carregarLivros() {
-        LivroDAO slaLivroDAO = new LivroDAO();
-        ArrayList<LivroDTO> listaLivros = slaLivroDAO.listarLivros();
-        tblLivro.setItems(FXCollections.observableArrayList(listaLivros));
-
-        lblTotal.setText(String.valueOf(listaLivros.size()));
+        try {
+            // Chama o Service em vez do DAO
+            List<LivroDTO> listaLivros = livroService.listarLivro();
+            tblLivro.setItems(FXCollections.observableArrayList(listaLivros));
+            lblTotal.setText(String.valueOf(listaLivros.size()));
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar livros: " + e.getMessage());
+        }
     }
 
     private void carregarCampos(LivroDTO livroDTO) {
