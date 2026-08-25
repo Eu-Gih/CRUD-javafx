@@ -15,16 +15,8 @@ public class CampoObrigatorioValidador implements ILivroValidator<String>{
         return this.valor != null && this.valor.trim().isEmpty();
     }
 
-    public boolean validarNumero(String valor) {
-        return valor != null && valor.matches("\\d+");
-    }
-
     @Override
     public String getMensagemErro() {
-        return "O campo " + nomeCampo + "deve ser preenchido";
-    }
-
-    public String getMensagemErroNumero() {
         return "O campo " + nomeCampo + "deve ser preenchido";
     }
 
