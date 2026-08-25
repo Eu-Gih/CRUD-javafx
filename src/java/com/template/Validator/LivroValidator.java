@@ -11,7 +11,7 @@ public class LivroValidator {
                 || dto.getAutor().trim().isEmpty()
                 || dto.getPaginas() <= 0) {
 
-            DialogUtil.showWarning("Atenção", "Faltam informações no pergaminho!", "Por favor, preencha todos os campos obrigatórios.");
+            DialogUtil.showWarning("Atenção", "Faltam informações!", "Por favor, preencha todos os campos obrigatórios.");
             return false;
         }
         return true;
