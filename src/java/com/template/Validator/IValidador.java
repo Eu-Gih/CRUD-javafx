@@ -1,9 +1,7 @@
 package com.template.Validator;
 
-public interface ILivroValidator <T>{
+public interface IValidador<T>{
     boolean validar (T valor);
     String getMensagemErro();
     T getValor();
 }
-
-

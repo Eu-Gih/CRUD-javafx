@@ -2,7 +2,7 @@ package com.template.Controller;
 
 import com.template.Model.dto.LivroDTO;
 import com.template.Service.LivroService;
-import com.template.Validator.LivroValidator;
+import com.template.Validator.ILivroValidador;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.List;
 
 public class MainController {
+
+    private final ILivroValidador livroValidador;
+
+    public MainController(ILivroValidador livroValidador) {
+        this.livroValidador = livroValidador;
+    }
+
     @FXML private Button btnSalvar;
     @FXML private Button btnDeletar;
     @FXML private Button btnAlterar;
@@ -33,7 +40,6 @@ public class MainController {
 
     // Instanciando o Service e o Validator ao invés do DAO
     private final LivroService livroService = new LivroService();
-    private final LivroValidator livroValidator = new LivroValidator();
 
     @FXML
     private void btnSalvarAction(ActionEvent event) {
@@ -49,7 +55,7 @@ public class MainController {
             }
 
             // Chama a validação antes de salvar
-            if (livroValidator.validarLivro(objLivroDTO)) {
+            if (livroValidador.validarLivro(objLivroDTO)) {
                 livroService.cadastrarLivro(objLivroDTO); // Chama o Service
                 lblMensagem.setText("Livro cadastrado com sucesso!");
                 carregarLivros();
@@ -78,7 +84,7 @@ public class MainController {
             }
 
             // Valida antes de alterar
-            if (livroValidator.validarLivro(atualizalivro)) {
+            if (livroValidador.validarLivro(atualizalivro)) {
                 livroService.atualizarLivro(atualizalivro); // Chama o Service
                 lblMensagem.setText("Livro atualizado com sucesso!");
                 carregarLivros();

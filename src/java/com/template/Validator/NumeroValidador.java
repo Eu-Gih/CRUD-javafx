@@ -1,6 +1,6 @@
 package com.template.Validator;
 
-public class NumeroValidador implements ILivroValidator<String>{
+public class NumeroValidador implements IValidador<String>{
 
         private final String valor;
         private String mensagemError;

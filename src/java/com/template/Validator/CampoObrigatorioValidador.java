@@ -1,6 +1,6 @@
 package com.template.Validator;
 
-public class CampoObrigatorioValidador implements ILivroValidator<String>{
+public class CampoObrigatorioValidador implements IValidador<String> {
 
     private final String nomeCampo;
     private final String valor;
